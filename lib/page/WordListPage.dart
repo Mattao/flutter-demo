@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:hello/page/StarredWords.dart';
+import 'package:hello/page/StarredWordListPage.dart';
 import 'package:hello/util/Logger.dart';
 
-class RandomWords extends StatefulWidget {
+class WordListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new RandomWordsState();
+    return new WordListPageState();
   }
 }
 
-class RandomWordsState extends State<RandomWords> {
-  final TAG = 'RandomWordsState';
+class WordListPageState extends State<WordListPage> {
+  static const TAG = 'WordListPageState';
 
-  final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  final _savedWordPairSet = new Set<WordPair>();
+  final _wordList = <WordPair>[];
+  final _biggerFont = new TextStyle(fontSize: 18.0);
+  final _savedWordListSet = new Set<WordPair>();
 
-  Widget _buildRow(WordPair wordPair) {
-    final alreadySaved = _savedWordPairSet.contains(wordPair);
+  Widget _buildItem(WordPair word) {
+    final alreadySaved = _savedWordListSet.contains(word);
 
     return new ListTile(
       title: new Text(
-        wordPair.asCamelCase,
+        word.asCamelCase,
         style: _biggerFont,
       ),
       trailing: new Icon(
@@ -32,16 +32,16 @@ class RandomWordsState extends State<RandomWords> {
       onTap: () {
         setState(() {
           if (alreadySaved) {
-            _savedWordPairSet.remove(wordPair);
+            _savedWordListSet.remove(word);
           } else {
-            _savedWordPairSet.add(wordPair);
+            _savedWordListSet.add(word);
           }
         });
       },
     );
   }
 
-  Widget _buildSuggestions() {
+  Widget _buildWordList() {
     return new ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
@@ -50,18 +50,18 @@ class RandomWordsState extends State<RandomWords> {
         }
 
         final index = i ~/ 2;
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10));
+        if (index >= _wordList.length) {
+          _wordList.addAll(generateWordPairs().take(10));
         }
-        return _buildRow(_suggestions[index]);
+        return _buildItem(_wordList[index]);
       },
     );
   }
 
-  void _pushSave() {
-    Logger.d(TAG, 'push save');
+  void _launchStarredWordsPage() {
+    Logger.d(TAG, 'launch StarredWordsPage');
     Navigator.push(context, new MaterialPageRoute(builder: (context) {
-      return new StarredWords(_savedWordPairSet);
+      return new StarredWordsListPage(_savedWordListSet);
     }));
   }
 
@@ -69,12 +69,12 @@ class RandomWordsState extends State<RandomWords> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Startup Name Generator'),
+        title: new Text('Word List'),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushSave),
+          new IconButton(icon: new Icon(Icons.list), onPressed: _launchStarredWordsPage),
         ],
       ),
-      body: _buildSuggestions(),
+      body: _buildWordList(),
     );
   }
 }

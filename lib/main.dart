@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello/page/RandomWords.dart';
+import 'package:hello/page/WordListPage.dart';
 
-// void main() => runApp(new MyApp());
-void main() {
-  runApp(new MyApp());
-}
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -14,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.white,
       ),
-      home: new RandomWords(),
+      home: new WordListPage(),
     );
   }
 }

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:hello/util/Logger.dart';
 
-class StarredWords extends StatelessWidget {
-  final TAG = 'StarredWords';
+class StarredWordsListPage extends StatelessWidget {
+  static const TAG = 'StarredWordsListPage';
+
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final _wordPairSet = new Set<WordPair>();
 
-  StarredWords(Set<WordPair> wordPairSet) {
+  StarredWordsListPage(Set<WordPair> wordPairSet) {
     if (wordPairSet != null) {
       this._wordPairSet.addAll(wordPairSet);
     }
