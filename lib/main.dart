@@ -3,17 +3,18 @@ import 'package:gitta/route/category/category_route.dart';
 
 void main() => runApp(MyApp());
 
+const _title = 'Unit Conventer';
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'hello',
+      title: _title,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('title'),
+          title: Text(_title),
         ),
-        backgroundColor: Colors.greenAccent,
         body: CategoryRoute(),
       ),
     );
