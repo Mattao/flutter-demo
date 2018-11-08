@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.greenAccent,
         body: Center(
           child: Category(
-            iconData: Icons.cached,
-            text: 'trash',
-            rippleColor: Colors.orangeAccent,
+            name: 'trash',
+            color: Colors.blue,
+            iconLocation: Icons.cached,
           ),
         ),
       ),

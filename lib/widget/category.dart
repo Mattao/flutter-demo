@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
-const _rowHeight = 100.0;
-const _borderRadius = 50.0;
+final _rowHeight = 100.0;
+final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 
+/// A custom [Category] widget.
+///
+/// The widget is composed on an [Icon] and [Text]. Tapping on the widget shows
+/// a colored [InkWell] animation.
 class Category extends StatelessWidget {
-  final IconData iconData;
-  final String text;
-  final Color rippleColor;
+  final String name;
+  final ColorSwatch color;
+  final IconData iconLocation;
 
-  const Category({this.iconData, this.text, this.rippleColor});
+  const Category({
+    Key key,
+    @required this.name,
+    @required this.color,
+    @required this.iconLocation,
+  })  : assert(name != null),
+        assert(color != null),
+        assert(iconLocation != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +30,29 @@ class Category extends StatelessWidget {
       child: Container(
         height: _rowHeight,
         child: InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(_borderRadius)),
-          highlightColor: rippleColor,
-          splashColor: rippleColor,
-          onTap: () {
-            print('tapped');
-          },
+          borderRadius: _borderRadius,
+          highlightColor: color,
+          splashColor: color,
+          onTap: () => print('I was tapped!'),
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
+              children: [
                 Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Icon(iconData),
+                  child: Icon(
+                    iconLocation,
+                    size: 60.0,
+                  ),
                 ),
                 Center(
-                  child: Text(text),
-                )
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline,
+                  ),
+                ),
               ],
             ),
           ),
