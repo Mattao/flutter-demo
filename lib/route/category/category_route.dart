@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gitta/widget/category.dart';
+import 'package:gitta/route/category/category.dart';
 
 class CategoryRoute extends StatelessWidget {
   static const _categoryNames = <String>[
-    'Trash',
-    'Volumn',
+    'Length',
+    'Area',
+    'Volume',
+    'Mass',
     'Time',
-    'Currency',
-    'Cake',
-    'Star',
+    'Digital Storage',
   ];
   static const _colors = <Color>[
     Colors.teal,

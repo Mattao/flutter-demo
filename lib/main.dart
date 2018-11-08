@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gitta/widget/category_route.dart';
+import 'package:gitta/route/category/category_route.dart';
 
 void main() => runApp(MyApp());
 
