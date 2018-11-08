@@ -1,3 +1,3 @@
-# gitta
+# unit-converter-flutter
 
-A Flutter app for GitHub.
+A simple app for studying flutter.
