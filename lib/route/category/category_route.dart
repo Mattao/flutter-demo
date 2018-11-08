@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gitta/route/category/category.dart';
+import 'package:unit_converter/route/category/category.dart';
 
 class CategoryRoute extends StatelessWidget {
   static const _categoryNames = <String>[

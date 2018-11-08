@@ -1,4 +1,4 @@
-package com.example.gitta;
+package com.example.unitconverter;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
