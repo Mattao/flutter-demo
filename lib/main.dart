@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gitta/widget/category.dart';
+import 'package:gitta/widget/category_route.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,13 +14,7 @@ class MyApp extends StatelessWidget {
           title: Text('title'),
         ),
         backgroundColor: Colors.greenAccent,
-        body: Center(
-          child: Category(
-            name: 'trash',
-            color: Colors.blue,
-            iconLocation: Icons.cached,
-          ),
-        ),
+        body: CategoryRoute(),
       ),
     );
   }
