@@ -10,6 +10,10 @@
 .history
 .svn/
 
+# Eclipse related
+.classpath
+.project
+
 # IntelliJ related
 *.iml
 *.ipr
