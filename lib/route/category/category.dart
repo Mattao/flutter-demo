@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:unit_converter/route/converter_route.dart';
 
 final _rowHeight = 100.0;
 final _borderRadius = BorderRadius.circular(_rowHeight / 2);
@@ -33,7 +34,7 @@ class Category extends StatelessWidget {
           borderRadius: _borderRadius,
           highlightColor: color,
           splashColor: color,
-          onTap: () => print('I was tapped!'),
+          onTap: () => _navigatorToConverter(context),
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
@@ -59,5 +60,18 @@ class Category extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigatorToConverter(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Converter'),
+          ),
+          body: ConverterRoute(),
+        );
+      },
+    ));
   }
 }
