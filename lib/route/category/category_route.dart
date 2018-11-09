@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category.dart';
 
-class CategoryRoute extends StatelessWidget {
+class _CategoryRouteState extends State<CategoryRoute> {
   static const _categoryNames = <String>[
     'Length',
     'Area',
@@ -28,11 +28,19 @@ class CategoryRoute extends StatelessWidget {
     Icons.grade,
   ];
 
-  Widget _buildCategoryListWidget(List<Widget> categoryWidgets) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categoryWidgets[index],
-      itemCount: categoryWidgets.length,
-    );
+  final categoryWidgets = <Category>[];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < _categoryNames.length; i++) {
+      categoryWidgets.add(Category(
+        name: _categoryNames[i],
+        color: _colors[i],
+        iconLocation: _icons[i],
+        units: _retrieveUnitList(_categoryNames[i]),
+      ));
+    }
   }
 
   List<Unit> _retrieveUnitList(String categoryName) {
@@ -47,19 +55,23 @@ class CategoryRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryWidgets = <Category>[];
-    for (var i = 0; i < _categoryNames.length; i++) {
-      categoryWidgets.add(Category(
-        name: _categoryNames[i],
-        color: _colors[i],
-        iconLocation: _icons[i],
-        units: _retrieveUnitList(_categoryNames[i]),
-      ));
-    }
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: _buildCategoryListWidget(categoryWidgets),
     );
+  }
+
+  Widget _buildCategoryListWidget(List<Widget> categoryWidgets) {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) => categoryWidgets[index],
+      itemCount: categoryWidgets.length,
+    );
+  }
+}
+
+class CategoryRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CategoryRouteState();
   }
 }
