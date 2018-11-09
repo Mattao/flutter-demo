@@ -21,10 +21,32 @@ class ConverterRoute extends StatelessWidget {
         assert(color != null),
         assert(units != null);
 
+  Widget _buildUnitItem(BuildContext context, Unit unit) {
+    return Container(
+      color: color,
+      padding: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            unit.name,
+            style: Theme.of(context).textTheme.headline,
+          ),
+          Text(
+            unit.conversion.toString(),
+            style: Theme.of(context).textTheme.subhead,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(units[1].name),
+    final unitWidgets =
+        units.map((Unit unit) => _buildUnitItem(context, unit)).toList();
+    return ListView(
+      children: unitWidgets,
     );
   }
 }
