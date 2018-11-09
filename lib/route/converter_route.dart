@@ -3,7 +3,36 @@ import 'package:meta/meta.dart';
 
 import 'package:unit_converter/model/Unit.dart';
 
-class ConverterRoute extends StatelessWidget {
+class _ConverterRouteState extends State<ConverterRoute> {
+  @override
+  Widget build(BuildContext context) {
+    final unitWidgets = widget.units.map(((unit) {
+      return Container(
+        color: widget.color,
+        margin: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              unit.name,
+              style: Theme.of(context).textTheme.headline,
+            ),
+            Text(
+              'conversion: ${unit.conversion}',
+              style: Theme.of(context).textTheme.subhead,
+            ),
+          ],
+        ),
+      );
+    })).toList();
+
+    return ListView(
+      children: unitWidgets,
+    );
+  }
+}
+
+class ConverterRoute extends StatefulWidget {
   /// This [Category]'s name.
   final String name;
 
@@ -21,32 +50,8 @@ class ConverterRoute extends StatelessWidget {
         assert(color != null),
         assert(units != null);
 
-  Widget _buildUnitItem(BuildContext context, Unit unit) {
-    return Container(
-      color: color,
-      padding: EdgeInsets.all(16.0),
-      margin: EdgeInsets.all(8.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            unit.name,
-            style: Theme.of(context).textTheme.headline,
-          ),
-          Text(
-            unit.conversion.toString(),
-            style: Theme.of(context).textTheme.subhead,
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
-  Widget build(BuildContext context) {
-    final unitWidgets =
-        units.map((Unit unit) => _buildUnitItem(context, unit)).toList();
-    return ListView(
-      children: unitWidgets,
-    );
+  State<StatefulWidget> createState() {
+    return _ConverterRouteState();
   }
 }
