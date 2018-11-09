@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category.dart';
 
 class CategoryRoute extends StatelessWidget {
@@ -34,6 +35,16 @@ class CategoryRoute extends StatelessWidget {
     );
   }
 
+  List<Unit> _retrieveUnitList(String categoryName) {
+    return List.generate(10, (int index) {
+      index += 1;
+      return Unit(
+        name: '$categoryName Unit $index',
+        conversion: index.toDouble(),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final categoryWidgets = <Category>[];
@@ -42,6 +53,7 @@ class CategoryRoute extends StatelessWidget {
         name: _categoryNames[i],
         color: _colors[i],
         iconLocation: _icons[i],
+        units: _retrieveUnitList(_categoryNames[i]),
       ));
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/converter_route.dart';
 
 final _rowHeight = 100.0;
@@ -13,15 +14,18 @@ class Category extends StatelessWidget {
   final String name;
   final ColorSwatch color;
   final IconData iconLocation;
+  final List<Unit> units;
 
   const Category({
     Key key,
     @required this.name,
     @required this.color,
     @required this.iconLocation,
+    @required this.units,
   })  : assert(name != null),
         assert(color != null),
         assert(iconLocation != null),
+        assert(units != null),
         super(key: key);
 
   @override
@@ -67,9 +71,15 @@ class Category extends StatelessWidget {
       builder: (BuildContext context) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Converter'),
+            title: Text(
+              name,
+            ),
           ),
-          body: ConverterRoute(),
+          body: ConverterRoute(
+            color: color,
+            name: name,
+            units: units,
+          ),
         );
       },
     ));
