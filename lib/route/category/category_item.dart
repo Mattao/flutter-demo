@@ -6,17 +6,17 @@ import 'package:unit_converter/route/converter_route.dart';
 final _rowHeight = 100.0;
 final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 
-/// A custom [Category] widget.
+/// A custom [CategoryItem] widget.
 ///
 /// The widget is composed on an [Icon] and [Text]. Tapping on the widget shows
 /// a colored [InkWell] animation.
-class Category extends StatelessWidget {
+class CategoryItem extends StatelessWidget {
   final String name;
   final ColorSwatch color;
   final IconData iconLocation;
   final List<Unit> units;
 
-  const Category({
+  const CategoryItem({
     Key key,
     @required this.name,
     @required this.color,

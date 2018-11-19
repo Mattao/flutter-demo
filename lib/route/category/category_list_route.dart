@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Unit.dart';
-import 'package:unit_converter/route/category/category.dart';
+import 'package:unit_converter/route/category/category_item.dart';
 
-class CategoryRoute extends StatefulWidget {
+class CategoryListRoute extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _CategoryRouteState();
+    return _CategoryListRouteState();
   }
 }
 
-class _CategoryRouteState extends State<CategoryRoute> {
+class _CategoryListRouteState extends State<CategoryListRoute> {
   static const _categoryNames = <String>[
     'Length',
     'Area',
@@ -35,13 +35,13 @@ class _CategoryRouteState extends State<CategoryRoute> {
     Icons.grade,
   ];
 
-  final categoryWidgets = <Category>[];
+  final categoryWidgets = <CategoryItem>[];
 
   @override
   void initState() {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categoryWidgets.add(Category(
+      categoryWidgets.add(CategoryItem(
         name: _categoryNames[i],
         color: _colors[i],
         iconLocation: _icons[i],

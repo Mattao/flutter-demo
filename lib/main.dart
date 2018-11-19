@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unit_converter/route/category/category_route.dart';
+import 'package:unit_converter/route/category/category_list_route.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text(_title),
         ),
-        body: CategoryRoute(),
+        body: CategoryListRoute(),
       ),
     );
   }
