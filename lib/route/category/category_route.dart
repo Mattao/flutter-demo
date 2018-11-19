@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category.dart';
 
+class CategoryRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CategoryRouteState();
+  }
+}
+
 class _CategoryRouteState extends State<CategoryRoute> {
   static const _categoryNames = <String>[
     'Length',
@@ -66,12 +73,5 @@ class _CategoryRouteState extends State<CategoryRoute> {
       itemBuilder: (BuildContext context, int index) => categoryWidgets[index],
       itemCount: categoryWidgets.length,
     );
-  }
-}
-
-class CategoryRoute extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CategoryRouteState();
   }
 }
