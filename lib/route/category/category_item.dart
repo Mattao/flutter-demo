@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/converter_route.dart';
 
