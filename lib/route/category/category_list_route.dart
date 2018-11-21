@@ -77,21 +77,35 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     });
   }
 
-  Widget _buildCategoryListWidget() {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => CategoryTile(
-            category: categories[index],
-            onTap: _onCategoryTap,
-          ),
-      itemCount: categories.length,
-    );
+  Widget _buildCategoryListWidget(Orientation deviceOrientation) {
+    if (Orientation.portrait == deviceOrientation) {
+      return ListView.builder(
+        itemBuilder: (BuildContext context, int index) => CategoryTile(
+              category: categories[index],
+              onTap: _onCategoryTap,
+            ),
+        itemCount: categories.length,
+      );
+    } else {
+      return GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: 3.0,
+        children: categories
+            .map((category) => CategoryTile(
+                  category: category,
+                  onTap: _onCategoryTap,
+                ))
+            .toList(),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMediaQuery(context));
     var categoryListView = Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryListWidget(),
+      child: _buildCategoryListWidget(MediaQuery.of(context).orientation),
     );
 
     return Backdrop(
