@@ -3,6 +3,7 @@ import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category_tile.dart';
 import 'package:unit_converter/route/converter_route.dart';
+import 'package:unit_converter/widget/backdrop.dart';
 
 class CategoryListRoute extends StatefulWidget {
   @override
@@ -39,36 +40,31 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
 
   final categories = <Category>[];
 
+  Category _currentCategory;
+
   @override
   void initState() {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(
-        Category(
-          name: _categoryNames[i],
-          color: _colors[i],
-          iconLocation: _icons[i],
-          units: _retrieveUnitList(_categoryNames[i]),
-        ),
+      var category = Category(
+        name: _categoryNames[i],
+        color: _colors[i],
+        iconLocation: _icons[i],
+        units: _retrieveUnitList(_categoryNames[i]),
       );
+
+      categories.add(category);
+
+      if (i == 0) {
+        _currentCategory = category;
+      }
     }
   }
 
   void _onCategoryTap(Category category) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              category.name,
-            ),
-          ),
-          body: ConverterRoute(
-            category: category,
-          ),
-        );
-      },
-    ));
+    setState(() {
+      _currentCategory = category;
+    });
   }
 
   List<Unit> _retrieveUnitList(String categoryName) {
@@ -81,14 +77,6 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryListWidget(),
-    );
-  }
-
   Widget _buildCategoryListWidget() {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) => CategoryTile(
@@ -96,6 +84,24 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
             onTap: _onCategoryTap,
           ),
       itemCount: categories.length,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var categoryListView = Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: _buildCategoryListWidget(),
+    );
+
+    return Backdrop(
+      backPanel: categoryListView,
+      backTitle: Text('Select a Category'),
+      currentCategory: _currentCategory,
+      frontPanel: ConverterRoute(
+        category: _currentCategory,
+      ),
+      frontTitle: Text('Unit Converter'),
     );
   }
 }

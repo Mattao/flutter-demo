@@ -11,12 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: _title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(_title),
-        ),
-        body: CategoryListRoute(),
-      ),
+      home: CategoryListRoute(),
     );
   }
 }
