@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Unit.dart';
 
-const _padding = EdgeInsets.all(16.0);
-
 class ConverterRoute extends StatefulWidget {
-  /// This [Category]'s name.
   final String name;
-
-  /// Color for this [Category].
   final Color color;
-
-  /// Units for this [Category].
   final List<Unit> units;
 
   const ConverterRoute({
@@ -22,45 +15,19 @@ class ConverterRoute extends StatefulWidget {
         assert(units != null);
 
   @override
-  State<StatefulWidget> createState() {
-    return _ConverterRouteState();
-  }
+  _ConverterRouteState createState() => _ConverterRouteState();
 }
 
 class _ConverterRouteState extends State<ConverterRoute> {
   Unit _fromUnit;
   Unit _toUnit;
-  double _inputValue;
   String _convertedValue = '';
-  List<DropdownMenuItem> _unitMenuItems;
+  double _inputValue;
   bool _showValidationError = false;
 
   @override
   void initState() {
     super.initState();
-    _createDropdownMenuItems();
-    _setDefaults();
-  }
-
-  void _createDropdownMenuItems() {
-    final newItems = <DropdownMenuItem>[];
-    for (var unit in widget.units) {
-      newItems.add(DropdownMenuItem(
-        value: unit.name,
-        child: Container(
-          child: Text(
-            unit.name,
-            softWrap: false,
-          ),
-        ),
-      ));
-    }
-    setState(() {
-      _unitMenuItems = newItems;
-    });
-  }
-
-  void _setDefaults() {
     setState(() {
       _fromUnit = widget.units[0];
       _toUnit = widget.units[1];
@@ -90,6 +57,33 @@ class _ConverterRouteState extends State<ConverterRoute> {
     });
   }
 
+  Unit _findUnit(String unitName) {
+    return widget.units.firstWhere(
+      (unit) => unit.name == unitName,
+      orElse: null,
+    );
+  }
+
+  void _updateFromConversion(dynamic unitName) {
+    setState(() {
+      _fromUnit = _findUnit(unitName);
+    });
+
+    if (_inputValue != null) {
+      _updateConversion();
+    }
+  }
+
+  void _updateToConversion(dynamic unitName) {
+    setState(() {
+      _toUnit = _findUnit(unitName);
+    });
+
+    if (_inputValue != null) {
+      _updateConversion();
+    }
+  }
+
   void _updateInputValue(String input) {
     setState(() {
       if (input == null || input.isEmpty) {
@@ -101,43 +95,30 @@ class _ConverterRouteState extends State<ConverterRoute> {
           _inputValue = inputDouble;
           _updateConversion();
         } catch (e) {
-          print('Error: $e');
+          print(e);
           _showValidationError = true;
         }
       }
     });
   }
 
-  Unit _getUnit(String unitName) {
-    return widget.units.firstWhere(
-      (unit) {
-        return unit.name == unitName;
-      },
-      orElse: null,
-    );
-  }
-
-  void _updateFromConversion(dynamic unitName) {
-    setState(() {
-      _fromUnit = _getUnit(unitName);
-    });
-    if (_inputValue != null) {
-      _updateConversion();
-    }
-  }
-
-  void _updateToConversion(dynamic unitName) {
-    setState(() {
-      _toUnit = _getUnit(unitName);
-    });
-    if (_inputValue != null) {
-      _updateConversion();
-    }
-  }
-
   Widget _createDropdown(String currentValue, ValueChanged<dynamic> onChanged) {
+    var newItems = <DropdownMenuItem>[];
+    widget.units.forEach((unit) {
+      newItems.add(DropdownMenuItem(
+        value: unit.name,
+        child: Container(
+          child: Text(
+            unit.name,
+            style: Theme.of(context).textTheme.display1,
+          ),
+        ),
+      ));
+    });
+
     return Container(
       margin: EdgeInsets.only(top: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
         color: Colors.grey[50],
         border: Border.all(
@@ -145,20 +126,14 @@ class _ConverterRouteState extends State<ConverterRoute> {
           width: 1.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.grey[50],
-        ),
-        child: DropdownButtonHideUnderline(
-          child: ButtonTheme(
-            alignedDropdown: true,
-            child: DropdownButton(
-              value: currentValue,
-              items: _unitMenuItems,
-              onChanged: onChanged,
-              style: Theme.of(context).textTheme.title,
-            ),
+      child: DropdownButtonHideUnderline(
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton(
+            value: currentValue,
+            items: newItems,
+            style: Theme.of(context).textTheme.title,
+            onChanged: onChanged,
           ),
         ),
       ),
@@ -168,22 +143,22 @@ class _ConverterRouteState extends State<ConverterRoute> {
   @override
   Widget build(BuildContext context) {
     final input = Padding(
-      padding: _padding,
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextField(
             style: Theme.of(context).textTheme.display1,
+            keyboardType: TextInputType.number,
+            onChanged: _updateInputValue,
             decoration: InputDecoration(
-              labelStyle: Theme.of(context).textTheme.display1,
-              errorText: _showValidationError ? 'Invalid number entered' : null,
               labelText: 'Input',
+              labelStyle: Theme.of(context).textTheme.display1,
+              errorText: _showValidationError ? 'Invalid number input' : null,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.0),
               ),
             ),
-            keyboardType: TextInputType.number,
-            onChanged: _updateInputValue,
           ),
           _createDropdown(_fromUnit.name, _updateFromConversion),
         ],
@@ -191,48 +166,45 @@ class _ConverterRouteState extends State<ConverterRoute> {
     );
 
     final arrows = RotatedBox(
-      quarterTurns: 1,
       child: Icon(
         Icons.compare_arrows,
         size: 40.0,
       ),
+      quarterTurns: 1,
     );
 
     final output = Padding(
-      padding: _padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          InputDecorator(
-            child: Text(
-              _convertedValue,
-              style: Theme.of(context).textTheme.display1,
-            ),
-            decoration: InputDecoration(
-              labelText: 'Output',
-              labelStyle: Theme.of(context).textTheme.display1,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.0),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            InputDecorator(
+              child: Text(
+                _convertedValue,
+                style: Theme.of(context).textTheme.display1,
+              ),
+              decoration: InputDecoration(
+                labelText: "Output",
+                labelStyle: Theme.of(context).textTheme.display1,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(0.0),
+                ),
               ),
             ),
-          ),
-          _createDropdown(_toUnit.name, _updateToConversion),
-        ],
-      ),
-    );
-
-    final converter = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        input,
-        arrows,
-        output,
-      ],
-    );
+            _createDropdown(_toUnit.name, _updateToConversion),
+          ],
+        ));
 
     return Padding(
-      padding: _padding,
-      child: converter,
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          input,
+          arrows,
+          output,
+        ],
+      ),
     );
   }
 }
