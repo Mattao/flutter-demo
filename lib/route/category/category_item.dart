@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unit_converter/model/Unit.dart';
+import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/route/converter_route.dart';
 
 final _rowHeight = 100.0;
@@ -10,21 +10,12 @@ final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 /// The widget is composed on an [Icon] and [Text]. Tapping on the widget shows
 /// a colored [InkWell] animation.
 class CategoryItem extends StatelessWidget {
-  final String name;
-  final ColorSwatch color;
-  final IconData iconLocation;
-  final List<Unit> units;
+  final Category category;
 
   const CategoryItem({
     Key key,
-    @required this.name,
-    @required this.color,
-    @required this.iconLocation,
-    @required this.units,
-  })  : assert(name != null),
-        assert(color != null),
-        assert(iconLocation != null),
-        assert(units != null),
+    @required this.category,
+  })  : assert(category != null),
         super(key: key);
 
   @override
@@ -35,8 +26,8 @@ class CategoryItem extends StatelessWidget {
         height: _rowHeight,
         child: InkWell(
           borderRadius: _borderRadius,
-          highlightColor: color,
-          splashColor: color,
+          highlightColor: category.color,
+          splashColor: category.color,
           onTap: () => _navigatorToConverter(context),
           child: Padding(
             padding: EdgeInsets.all(8.0),
@@ -46,13 +37,13 @@ class CategoryItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Icon(
-                    iconLocation,
+                    category.iconLocation,
                     size: 60.0,
                   ),
                 ),
                 Center(
                   child: Text(
-                    name,
+                    category.name,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline,
                   ),
@@ -71,13 +62,13 @@ class CategoryItem extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              name,
+              category.name,
             ),
           ),
           body: ConverterRoute(
-            color: color,
-            name: name,
-            units: units,
+            color: category.color,
+            name: category.name,
+            units: category.units,
           ),
         );
       },

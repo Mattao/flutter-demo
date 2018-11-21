@@ -4,8 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:unit_converter/route/category/category_item.dart';
-
+import 'package:unit_converter/model/Category.dart';
 
 const double _kFlingVelocity = 2.0;
 
@@ -112,7 +111,7 @@ class _BackdropTitle extends AnimatedWidget {
 /// can make a selection. The user can also configure the titles for when the
 /// front or back panel is showing.
 class Backdrop extends StatefulWidget {
-  final CategoryItem currentCategory;
+  final Category currentCategory;
   final Widget frontPanel;
   final Widget backPanel;
   final Widget frontTitle;

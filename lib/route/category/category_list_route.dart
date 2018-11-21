@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category_item.dart';
 
@@ -42,10 +43,12 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
       categoryWidgets.add(CategoryItem(
-        name: _categoryNames[i],
-        color: _colors[i],
-        iconLocation: _icons[i],
-        units: _retrieveUnitList(_categoryNames[i]),
+        category: Category(
+          name: _categoryNames[i],
+          color: _colors[i],
+          iconLocation: _icons[i],
+          units: _retrieveUnitList(_categoryNames[i]),
+        ),
       ));
     }
   }
