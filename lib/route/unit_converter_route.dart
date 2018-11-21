@@ -39,6 +39,9 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
       _fromUnit = widget.category.units[0];
       _toUnit = widget.category.units[1];
     });
+    if (_inputValue != null) {
+      _updateConversion();
+    }
   }
 
   /// Clean up conversion; trim trailing zeros, e.g. 5.500 -> 5.5, 10.0 -> 10
