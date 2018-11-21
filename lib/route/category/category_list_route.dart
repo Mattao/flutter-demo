@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
-import 'package:unit_converter/route/category/category_item.dart';
+import 'package:unit_converter/route/category/category_tile.dart';
 
 class CategoryListRoute extends StatefulWidget {
   @override
@@ -36,13 +36,13 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Icons.grade,
   ];
 
-  final categoryWidgets = <CategoryItem>[];
+  final categoryWidgets = <CategoryTile>[];
 
   @override
   void initState() {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categoryWidgets.add(CategoryItem(
+      categoryWidgets.add(CategoryTile(
         category: Category(
           name: _categoryNames[i],
           color: _colors[i],

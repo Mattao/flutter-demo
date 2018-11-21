@@ -5,14 +5,14 @@ import 'package:unit_converter/route/converter_route.dart';
 final _rowHeight = 100.0;
 final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 
-/// A custom [CategoryItem] widget.
+/// A custom [CategoryTile] widget.
 ///
 /// The widget is composed on an [Icon] and [Text]. Tapping on the widget shows
 /// a colored [InkWell] animation.
-class CategoryItem extends StatelessWidget {
+class CategoryTile extends StatelessWidget {
   final Category category;
 
-  const CategoryItem({
+  const CategoryTile({
     Key key,
     @required this.category,
   })  : assert(category != null),
