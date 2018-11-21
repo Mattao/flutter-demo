@@ -38,7 +38,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Icons.grade,
   ];
 
-  final categories = <Category>[];
+  final _categories = <Category>[];
 
   Category _currentCategory;
 
@@ -53,7 +53,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
         units: _retrieveUnitList(_categoryNames[i]),
       );
 
-      categories.add(category);
+      _categories.add(category);
 
       if (i == 0) {
         _currentCategory = category;
@@ -81,16 +81,16 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     if (Orientation.portrait == deviceOrientation) {
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) => CategoryTile(
-              category: categories[index],
+              category: _categories[index],
               onTap: _onCategoryTap,
             ),
-        itemCount: categories.length,
+        itemCount: _categories.length,
       );
     } else {
       return GridView.count(
         crossAxisCount: 2,
         childAspectRatio: 3.0,
-        children: categories
+        children: _categories
             .map((category) => CategoryTile(
                   category: category,
                   onTap: _onCategoryTap,
