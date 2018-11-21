@@ -37,25 +37,24 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Icons.grade,
   ];
 
-  final categoryWidgets = <CategoryTile>[];
+  final categories = <Category>[];
 
   @override
   void initState() {
     super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categoryWidgets.add(CategoryTile(
-        category: Category(
+      categories.add(
+        Category(
           name: _categoryNames[i],
           color: _colors[i],
           iconLocation: _icons[i],
           units: _retrieveUnitList(_categoryNames[i]),
         ),
-        onTap: _navigatorToConverter,
-      ));
+      );
     }
   }
 
-  void _navigatorToConverter(Category category) {
+  void _onCategoryTap(Category category) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) {
         return Scaffold(
@@ -88,14 +87,17 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryListWidget(categoryWidgets),
+      child: _buildCategoryListWidget(),
     );
   }
 
-  Widget _buildCategoryListWidget(List<Widget> categoryWidgets) {
+  Widget _buildCategoryListWidget() {
     return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categoryWidgets[index],
-      itemCount: categoryWidgets.length,
+      itemBuilder: (BuildContext context, int index) => CategoryTile(
+            category: categories[index],
+            onTap: _onCategoryTap,
+          ),
+      itemCount: categories.length,
     );
   }
 }
