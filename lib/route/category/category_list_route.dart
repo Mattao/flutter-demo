@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category_tile.dart';
-import 'package:unit_converter/route/converter_route.dart';
+import 'package:unit_converter/route/unit_converter_route.dart';
 import 'package:unit_converter/widget/backdrop.dart';
 
 class CategoryListRoute extends StatefulWidget {
@@ -98,7 +98,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
       backPanel: categoryListView,
       backTitle: Text('Select a Category'),
       currentCategory: _currentCategory,
-      frontPanel: ConverterRoute(
+      frontPanel: UnitConverterRoute(
         category: _currentCategory,
       ),
       frontTitle: Text('Unit Converter'),

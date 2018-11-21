@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 
-class ConverterRoute extends StatefulWidget {
+class UnitConverterRoute extends StatefulWidget {
   final Category category;
 
-  const ConverterRoute({
+  const UnitConverterRoute({
     @required this.category,
   }) : assert(category != null);
 
   @override
-  _ConverterRouteState createState() => _ConverterRouteState();
+  _UnitConverterRouteState createState() => _UnitConverterRouteState();
 }
 
-class _ConverterRouteState extends State<ConverterRoute> {
+class _UnitConverterRouteState extends State<UnitConverterRoute> {
   Unit _fromUnit;
   Unit _toUnit;
   String _convertedValue = '';
