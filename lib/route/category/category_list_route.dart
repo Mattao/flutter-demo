@@ -64,9 +64,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
             ),
           ),
           body: ConverterRoute(
-            color: category.color,
-            name: category.name,
-            units: category.units,
+            category: category,
           ),
         );
       },

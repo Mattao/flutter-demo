@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 
 class ConverterRoute extends StatefulWidget {
-  final String name;
-  final Color color;
-  final List<Unit> units;
+  final Category category;
 
   const ConverterRoute({
-    @required this.name,
-    @required this.color,
-    @required this.units,
-  })  : assert(name != null),
-        assert(color != null),
-        assert(units != null);
+    @required this.category,
+  }) : assert(category != null);
 
   @override
   _ConverterRouteState createState() => _ConverterRouteState();
@@ -29,8 +24,8 @@ class _ConverterRouteState extends State<ConverterRoute> {
   void initState() {
     super.initState();
     setState(() {
-      _fromUnit = widget.units[0];
-      _toUnit = widget.units[1];
+      _fromUnit = widget.category.units[0];
+      _toUnit = widget.category.units[1];
     });
   }
 
@@ -58,7 +53,7 @@ class _ConverterRouteState extends State<ConverterRoute> {
   }
 
   Unit _findUnit(String unitName) {
-    return widget.units.firstWhere(
+    return widget.category.units.firstWhere(
       (unit) => unit.name == unitName,
       orElse: null,
     );
@@ -104,7 +99,7 @@ class _ConverterRouteState extends State<ConverterRoute> {
 
   Widget _createDropdown(String currentValue, ValueChanged<dynamic> onChanged) {
     var newItems = <DropdownMenuItem>[];
-    widget.units.forEach((unit) {
+    widget.category.units.forEach((unit) {
       newItems.add(DropdownMenuItem(
         value: unit.name,
         child: Container(
