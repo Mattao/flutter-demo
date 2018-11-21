@@ -23,6 +23,18 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   @override
   void initState() {
     super.initState();
+    _setDefaults();
+  }
+
+  @override
+  void didUpdateWidget(UnitConverterRoute oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.category != widget.category) {
+      _setDefaults();
+    }
+  }
+
+  void _setDefaults() {
     setState(() {
       _fromUnit = widget.category.units[0];
       _toUnit = widget.category.units[1];
