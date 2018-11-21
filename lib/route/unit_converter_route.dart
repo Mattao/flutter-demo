@@ -207,8 +207,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
     return Padding(
       padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: <Widget>[
           input,
           arrows,
