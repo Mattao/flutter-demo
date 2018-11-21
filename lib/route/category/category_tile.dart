@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
-import 'package:unit_converter/route/converter_route.dart';
 
 final _rowHeight = 100.0;
 final _borderRadius = BorderRadius.circular(_rowHeight / 2);
@@ -11,11 +10,14 @@ final _borderRadius = BorderRadius.circular(_rowHeight / 2);
 /// a colored [InkWell] animation.
 class CategoryTile extends StatelessWidget {
   final Category category;
+  final ValueChanged<Category> onTap;
 
   const CategoryTile({
     Key key,
     @required this.category,
+    @required this.onTap,
   })  : assert(category != null),
+        assert(onTap != null),
         super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class CategoryTile extends StatelessWidget {
           borderRadius: _borderRadius,
           highlightColor: category.color,
           splashColor: category.color,
-          onTap: () => _navigatorToConverter(context),
+          onTap: () => onTap(category),
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
@@ -54,24 +56,5 @@ class CategoryTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _navigatorToConverter(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              category.name,
-            ),
-          ),
-          body: ConverterRoute(
-            color: category.color,
-            name: category.name,
-            units: category.units,
-          ),
-        );
-      },
-    ));
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category_tile.dart';
+import 'package:unit_converter/route/converter_route.dart';
 
 class CategoryListRoute extends StatefulWidget {
   @override
@@ -49,8 +50,28 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
           iconLocation: _icons[i],
           units: _retrieveUnitList(_categoryNames[i]),
         ),
+        onTap: _navigatorToConverter,
       ));
     }
+  }
+
+  void _navigatorToConverter(Category category) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              category.name,
+            ),
+          ),
+          body: ConverterRoute(
+            color: category.color,
+            name: category.name,
+            units: category.units,
+          ),
+        );
+      },
+    ));
   }
 
   List<Unit> _retrieveUnitList(String categoryName) {
