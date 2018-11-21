@@ -205,14 +205,29 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           ],
         ));
 
+    final converter = ListView(
+      children: <Widget>[
+        input,
+        arrows,
+        output,
+      ],
+    );
+
     return Padding(
       padding: EdgeInsets.all(16.0),
-      child: ListView(
-        children: <Widget>[
-          input,
-          arrows,
-          output,
-        ],
+      child: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          if (orientation == Orientation.portrait) {
+            return converter;
+          } else {
+            return Center(
+              child: Container(
+                width: 450.0,
+                child: converter,
+              ),
+            );
+          }
+        },
       ),
     );
   }
