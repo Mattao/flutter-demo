@@ -23,15 +23,17 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Colors.teal,
     Colors.red,
     Colors.cyan,
+
   ];
-  static const _icons = <IconData>[
-    Icons.cached,
-    Icons.volume_up,
-    Icons.timer,
-    Icons.monetization_on,
-    Icons.cake,
-    Icons.grade,
-    Icons.adb,
+  static const _icons = <String>[
+    'assets/icons/length.png',
+    'assets/icons/area.png',
+    'assets/icons/volume.png',
+    'assets/icons/mass.png',
+    'assets/icons/time.png',
+    'assets/icons/digital_storage.png',
+    'assets/icons/power.png',
+    'assets/icons/currency.png',
   ];
 
   final _categories = <Category>[];

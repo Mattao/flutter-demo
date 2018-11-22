@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: _title,
       home: CategoryListRoute(),
+      theme: ThemeData(
+        fontFamily: 'Raleway',
+      ),
     );
   }
 }
