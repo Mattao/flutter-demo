@@ -20,6 +20,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
   String _convertedValue = '';
   double _inputValue;
   bool _showValidationError = false;
+  bool _showErrorUi = false;
 
   @override
   void initState() {
@@ -67,9 +68,15 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
       final conversion = await api.convert(apiCategory['route'],
           _inputValue.toString(), _fromUnit.name, _toUnit.name);
 
-      setState(() {
-        _convertedValue = _format(conversion);
-      });
+      if (conversion == null) {
+        setState(() {
+          _showErrorUi = true;
+        });
+      } else {
+        setState(() {
+          _convertedValue = _format(conversion);
+        });
+      }
     } else {
       setState(() {
         _convertedValue =
@@ -162,6 +169,36 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.category.name == apiCategory['name'] && _showErrorUi) {
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+            color: widget.category.color,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.error_outline,
+                size: 18.0,
+                color: Colors.white,
+              ),
+              Text(
+                'Connection Error!',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     final input = Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(

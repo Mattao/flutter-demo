@@ -124,10 +124,16 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
   Widget _buildCategoryListWidget(Orientation deviceOrientation) {
     if (Orientation.portrait == deviceOrientation) {
       return ListView.builder(
-        itemBuilder: (BuildContext context, int index) => CategoryTile(
-              category: _categories[index],
-              onTap: _onCategoryTap,
-            ),
+        itemBuilder: (BuildContext context, int index) {
+          var category = _categories[index];
+          return CategoryTile(
+            category: category,
+            onTap:
+                category.name == apiCategory['name'] && category.units.isEmpty
+                    ? null
+                    : _onCategoryTap,
+          );
+        },
         itemCount: _categories.length,
       );
     } else {
