@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/api.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 
@@ -60,11 +61,21 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
     return outputNum;
   }
 
-  void _updateConversion() {
-    setState(() {
-      _convertedValue =
-          _format(_inputValue * (_toUnit.conversion / _fromUnit.conversion));
-    });
+  Future<void> _updateConversion() async {
+    if (widget.category.name == apiCategory['name']) {
+      final api = Api();
+      final conversion = await api.convert(apiCategory['route'],
+          _inputValue.toString(), _fromUnit.name, _toUnit.name);
+
+      setState(() {
+        _convertedValue = _format(conversion);
+      });
+    } else {
+      setState(() {
+        _convertedValue =
+            _format(_inputValue * (_toUnit.conversion / _fromUnit.conversion));
+      });
+    }
   }
 
   Unit _findUnit(String unitName) {

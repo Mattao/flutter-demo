@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:unit_converter/api.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
 import 'package:unit_converter/route/category/category_tile.dart';
@@ -23,7 +24,6 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Colors.teal,
     Colors.red,
     Colors.cyan,
-
   ];
   static const _icons = <String>[
     'assets/icons/length.png',
@@ -45,6 +45,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     super.didChangeDependencies();
     if (_categories.isEmpty) {
       await _retrieveLocalCategories();
+      await _retrieveApiCategory();
     }
   }
 
@@ -77,6 +78,41 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
 
       categoryIndex++;
     });
+  }
+
+  Future<void> _retrieveApiCategory() async {
+    // add a placehoder
+    setState(() {
+      _categories.insert(
+          0,
+          Category(
+            name: apiCategory['name'],
+            color: _colors.last,
+            iconLocation: _icons.last,
+            units: <Unit>[],
+          ));
+    });
+
+    final api = Api();
+    final jsonUnits = await api.getUnits(apiCategory['route']);
+    if (jsonUnits != null) {
+      final units = <Unit>[];
+      for (var unit in jsonUnits) {
+        units.add(Unit.fromJson(unit));
+      }
+
+      setState(() {
+        _categories.removeAt(0);
+        _categories.insert(
+            0,
+            Category(
+              name: apiCategory['name'],
+              color: _colors.last,
+              iconLocation: _icons.last,
+              units: units,
+            ));
+      });
+    }
   }
 
   void _onCategoryTap(Category category) {
