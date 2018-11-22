@@ -120,7 +120,6 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
         child: Container(
           child: Text(
             unit.name,
-            style: Theme.of(context).textTheme.display1,
           ),
         ),
       ));
