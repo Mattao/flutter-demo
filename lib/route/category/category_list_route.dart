@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:unit_converter/model/Category.dart';
 import 'package:unit_converter/model/Unit.dart';
@@ -13,14 +15,6 @@ class CategoryListRoute extends StatefulWidget {
 }
 
 class _CategoryListRouteState extends State<CategoryListRoute> {
-  static const _categoryNames = <String>[
-    'Length',
-    'Area',
-    'Volume',
-    'Mass',
-    'Time',
-    'Digital Storage',
-  ];
   static const _colors = <Color>[
     Colors.teal,
     Colors.orange,
@@ -43,37 +37,45 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
   Category _currentCategory;
 
   @override
-  void initState() {
-    super.initState();
-    for (var i = 0; i < _categoryNames.length; i++) {
-      var category = Category(
-        name: _categoryNames[i],
-        color: _colors[i],
-        iconLocation: _icons[i],
-        units: _retrieveUnitList(_categoryNames[i]),
-      );
+  Future<void> didChangeDependencies() async {
+    super.didChangeDependencies();
+    if (_categories.isEmpty) {
+      await _retrieveLocalCategories();
+    }
+  }
 
+  Future<void> _retrieveLocalCategories() async {
+    final json = DefaultAssetBundle.of(context)
+        .loadString('assets/data/regular_units.json');
+    final data = JsonDecoder().convert(await json);
+    if (data is! Map) {
+      throw ('Data retrived from API is not a Map');
+    }
+
+    var categoryIndex = 0;
+    data.keys.forEach((key) {
+      List<Unit> units =
+          data[key].map<Unit>((dynamic data) => Unit.fromJson(data)).toList();
+
+      var category = Category(
+        name: key,
+        units: units,
+        color: _colors[categoryIndex],
+        iconLocation: _icons[categoryIndex],
+      );
       _categories.add(category);
 
-      if (i == 0) {
+      if (categoryIndex == 0) {
         _currentCategory = category;
       }
-    }
+
+      categoryIndex++;
+    });
   }
 
   void _onCategoryTap(Category category) {
     setState(() {
       _currentCategory = category;
-    });
-  }
-
-  List<Unit> _retrieveUnitList(String categoryName) {
-    return List.generate(10, (int index) {
-      index += 1;
-      return Unit(
-        name: '$categoryName Unit $index',
-        conversion: index.toDouble(),
-      );
     });
   }
 
