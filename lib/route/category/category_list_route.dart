@@ -22,6 +22,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Colors.greenAccent,
     Colors.teal,
     Colors.red,
+    Colors.cyan,
   ];
   static const _icons = <IconData>[
     Icons.cached,
@@ -30,6 +31,7 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
     Icons.monetization_on,
     Icons.cake,
     Icons.grade,
+    Icons.adb,
   ];
 
   final _categories = <Category>[];
@@ -65,9 +67,11 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
       );
       _categories.add(category);
 
-      if (categoryIndex == 0) {
-        _currentCategory = category;
-      }
+      setState(() {
+        if (categoryIndex == 0) {
+          _currentCategory = category;
+        }
+      });
 
       categoryIndex++;
     });
@@ -104,6 +108,16 @@ class _CategoryListRouteState extends State<CategoryListRoute> {
 
   @override
   Widget build(BuildContext context) {
+    if (_categories.isEmpty) {
+      return Center(
+        child: Container(
+          height: 180.0,
+          width: 180.0,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     assert(debugCheckHasMediaQuery(context));
     var categoryListView = Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
