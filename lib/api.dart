@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-const apiCategory = {
+const Map<String, String> apiCategory = {
   'name': 'Currency',
   'route': 'currency',
 };
@@ -19,12 +19,16 @@ class Api {
   ///     {
   ///       name: "US Dollar",
   ///       conversion: 1,
-  ///       description: "It is a little-known fact that the production cost of each item in the Dollar Menu is the true driver for the fluctuations in the US Dollar."
+  ///       description: "It is a little-known fact that the production cost
+  ///                     of each item in the Dollar Menu is the true driver
+  ///                     for the fluctuations in the US Dollar."
   ///     },
   ///     {
   ///       name: "Brownie Points",
   ///       conversion: 0.9037143852380408,
-  ///       description: "While not a "monetary" currency, Brownie Points are a form of social currency that include doing favors and helping others."
+  ///       description: "While not a "monetary" currency,
+  ///                     Brownie Points are a form of social currency
+  ///                     that include doing favors and helping others."
   ///     },
   ///   ]
   /// }
@@ -47,7 +51,11 @@ class Api {
   /// }
   /// ```
   Future<double> convert(
-      String category, String amount, String fromUnitName, String toUnitName) async {
+    String category,
+    String amount,
+    String fromUnitName,
+    String toUnitName,
+  ) async {
     final uri = Uri.http(
       _host,
       '/$category/convert',
@@ -79,7 +87,7 @@ class Api {
 
       final responseBody = await httpResponse.transform(utf8.decoder).join();
       return json.decode(responseBody);
-    } catch (e) {
+    } on Exception catch (e) {
       print('$e');
       return null;
     }

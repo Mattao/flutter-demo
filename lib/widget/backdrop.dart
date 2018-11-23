@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:unit_converter/model/Category.dart';
+import 'package:unit_converter/model/category.dart';
 
 const double _kFlingVelocity = 2.0;
 
@@ -75,7 +75,7 @@ class _BackdropTitle extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = this.listenable;
+    final Animation<double> animation = listenable;
     return DefaultTextStyle(
       style: Theme.of(context).primaryTextTheme.title,
       softWrap: false,
@@ -205,14 +205,15 @@ class _BackdropState extends State<Backdrop>
 
     final double flingVelocity =
         details.velocity.pixelsPerSecond.dy / _backdropHeight;
-    if (flingVelocity < 0.0)
+    if (flingVelocity < 0.0) {
       _controller.fling(velocity: math.max(_kFlingVelocity, -flingVelocity));
-    else if (flingVelocity > 0.0)
+    } else if (flingVelocity > 0.0) {
       _controller.fling(velocity: math.min(-_kFlingVelocity, -flingVelocity));
-    else
+    } else {
       _controller.fling(
           velocity:
               _controller.value < 0.5 ? -_kFlingVelocity : _kFlingVelocity);
+    }
   }
 
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unit_converter/api.dart';
-import 'package:unit_converter/model/Category.dart';
-import 'package:unit_converter/model/Unit.dart';
+import 'package:unit_converter/model/category.dart';
+import 'package:unit_converter/model/unit.dart';
 
 class UnitConverterRoute extends StatefulWidget {
   final Category category;
@@ -122,7 +122,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           _showValidationError = false;
           _inputValue = inputDouble;
           _updateConversion();
-        } catch (e) {
+        } on Exception catch (e) {
           print(e);
           _showValidationError = true;
         }
@@ -132,7 +132,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
 
   Widget _createDropdown(String currentValue, ValueChanged<dynamic> onChanged) {
     var newItems = <DropdownMenuItem>[];
-    widget.category.units.forEach((unit) {
+    for (var unit in widget.category.units) {
       newItems.add(DropdownMenuItem(
         value: unit.name,
         child: Container(
@@ -141,7 +141,7 @@ class _UnitConverterRouteState extends State<UnitConverterRoute> {
           ),
         ),
       ));
-    });
+    }
 
     return Container(
       margin: EdgeInsets.only(top: 16.0),

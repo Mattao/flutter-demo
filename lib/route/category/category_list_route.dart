@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:unit_converter/api.dart';
-import 'package:unit_converter/model/Category.dart';
-import 'package:unit_converter/model/Unit.dart';
+import 'package:unit_converter/model/category.dart';
+import 'package:unit_converter/model/unit.dart';
 import 'package:unit_converter/route/category/category_tile.dart';
 import 'package:unit_converter/route/unit_converter_route.dart';
 import 'package:unit_converter/widget/backdrop.dart';
